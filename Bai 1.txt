@@ -1,0 +1,18 @@
+Phần 1: Phân tích kiến trúc an ninh
+ 1. Rủi ro lưu mật khẩu trên Chrome khi bị Infostealer:
+     Chrome lưu mật khẩu trong tệp Login Data mã hóa bằng Windows DPAPI.
+     Mã độc Infostealer (Lumma, RedLine) khi chạy trên máy victim sẽ gọi API hệ thống để giải mã Local State và trích xuất toàn bộ mật khẩu dạng thô (plaintext) trong vài miligiây.
+2. Kiến trúc Zero-Knowledge & Client-side Decryption:
+ Dữ liệu được mã hóa/giải mã 100% tại RAM thiết bị người dùng bằng khóa tạo từ Master Passphrase.
+ Server Bitwarden chỉ lưu các khối mã hóa (AES-256). Kể cả khi server bị hack, kẻ tấn công cũng không có khóa để giải mã dữ liệu.
+Phần 2: Chính sách & Kịch bản chuyển đổi
+Master Passphrase chuẩn:
+ Cấu trúc: Ghép 4–5 từ ngẫu nhiên, dài lowns hown ký tự, phân tách bằng dấu gạch ngang, chữ số và ký tự đặc biệt.
+ Ví dụ: CaFe-Muoi-MeoBeo-CodeDem-2026!
+2.Cấu hình chuẩn Bitwarden Generator (cho 40 tài khoản):
+ Chống Phishing bằng Auto-fill:
+    Bitwarden kiểm tra tên miền gốc (FQDN/Punycode).
+    Nếu URL trang web bị giả mạo (như githúb.com hay .xyz), Bitwarden từ chối tự động điền, giúp cảnh báo lập trình viên ngay lập tức.
+2.Lưu trữ Khóa Cấp cứu (Emergency Kit):
+ Bản giấy Offline: In Master Passphrase + Mã 2FA dự phòng -> Niêm phong trong két sắt công ty (yêu cầu tối thiểu 2 quản lý đồng ký mở).
+ Tính năng Online: Kích hoạt Emergency Access trên Bitwarden, cấp quyền tiếp quản cho Team Lead với thời gian chờ bàn giao tự động từ 48 – 72 giờ
