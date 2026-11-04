@@ -1,0 +1,82 @@
+Phần 1: Nhận diện rủi ro & Xử lý sự cố
+
+Tình huống 1: Tấn công Phishing / Typosquatting. Dấu hiệu giả mạo là tên miền gõ sai githuh-security.com (chữ h thay cho b) và đánh vào tâm lý hoảng loạn.
+
+Tình huống 2: Bẫy Mã độc (Infostealer / Ransomware). Việc yêu cầu "tắt Windows Defender" nhằm vô hiệu hóa lớp bảo vệ để mã độc tự do thu thập mật khẩu và đánh cắp dữ liệu.
+
+Áp dụng Quy tắc 5 KHÔNG: KHÔNG nhấp vào liên kết lạ / nhập mật khẩu trên web chưa xác minh; KHÔNG tải file crack hay tắt phần mềm diệt virus.
+
+4 Bước cấp cứu sự cố:
+
+Ngắt ngay kết nối Wi-Fi / mạng LAN.
+
+Bật lại Antivirus tiến hành quét toàn bộ hệ thống (Full Scan).
+
+Đổi mật khẩu và đăng xuất tất cả phiên làm việc từ một thiết bị an toàn khác.
+
+Báo cáo Trưởng nhóm và thu hồi/thay mới toàn bộ API Keys.
+
+Phần 2: Chuyển sang Password Manager
+
+Credential Stuffing & Hiệu ứng Domino: Khi lộ mật khẩu email dùng chung, hacker sẽ dùng ngay mật khẩu đó để thử đăng nhập tự động vào GitHub và Vercel.
+
+An toàn với Zero-Knowledge: Máy chủ Bitwarden chỉ lưu bản mã hóa (AES-256). Khóa giải mã được tạo hoàn toàn tại máy người dùng từ Master Passphrase nên kể cả khi máy chủ bị hack, dữ liệu vẫn an toàn.
+
+Cấu hình Bitwarden Generator: Độ dài 32 ký tự; bật đầy đủ chữ hoa (A-Z), chữ thường (a-z), chữ số (0-9) và ký tự đặc biệt.
+
+Phần 3: Kích hoạt 2FA cho GitHub
+
+Ưu thế của TOTP so với SMS OTP: Tránh được nguy cơ bị tráo SIM (SIM Swapping) và hoạt động hoàn toàn Offline khi mất sóng hoặc đi nước ngoài.
+
+5 Bước bật 2FA trên GitHub:
+
+Vào Settings -> Password and authentication.
+
+Chọn Enable two-factor authentication.
+
+Chọn phương thức Authenticator app.
+
+Quét mã QR bằng ứng dụng Google Authenticator.
+
+Nhập mã 6 số từ ứng dụng để hoàn tất.
+
+Quản lý Backup Codes: NÊN lưu vào ghi chú bảo mật trong Bitwarden hoặc in ra giấy cất két sắt. KHÔNG chụp ảnh màn hình, lưu file .txt thô hay gửi qua tin nhắn.
+
+Phần 4: Bảo vệ Secrets trước khi push
+
+2 Secrets bị lộ: API Key (sk-proj-abc123456789) và DB Password (SmartCampus@2026).
+
+Đoạn code config.js chuẩn:
+
+JavaScript
+const API_KEY = process.env.API_KEY;
+const DB_PASSWORD = process.env.DB_PASSWORD;
+
+function connectDatabase() {
+  return connect(DB_PASSWORD);
+}
+
+module.exports = { connectDatabase };
+Nội dung các tệp:
+
+File .env:
+API_KEY=sk-proj-abc123456789
+DB_PASSWORD=SmartCampus@2026
+
+File .gitignore:
+.env
+node_modules/
+
+File .env.example:
+API_KEY=your_api_key_here
+DB_PASSWORD=your_database_password_here
+
+4 Bước kiểm tra Pre-push:
+
+Xác nhận .env đã khai báo trong .gitignore.
+
+Chạy git status đảm bảo .env không nằm trong danh sách theo dõi.
+
+Chạy git diff rà soát lại từng dòng code xem còn chuỗi secret thô nào không.
+
+Chạy công cụ quét tự động (như Gitleaks) trước khi git push.
