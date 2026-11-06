@@ -1,0 +1,24 @@
+So sánh chi tiết giữa SMS OTP và Authenticator TOTP:
+
+1. Khả năng chống SIM Swapping & SS7:
+
+SMS OTP: Kém — Dễ bị chiếm đoạt số điện thoại qua nhà mạng hoặc nghe lén qua sóng viễn thông.
+
+TOTP: Tuyệt đối — Khóa bí mật lưu an toàn trong bộ nhớ mã hóa của điện thoại, chống tráo SIM hoàn toàn.
+
+2. Tính sẵn sàng khi Offline / Nước ngoài:
+
+SMS OTP: Phụ thuộc — Không nhận được mã khi mất sóng di động, đi máy bay hoặc chưa đăng ký Roaming quốc tế.
+
+TOTP: Hoàn hảo — Hoạt động 100% Offline mọi lúc mọi nơi, không cần mạng hay sóng viễn thông.
+
+3. Độ tiện dụng & Chi phí vận hành:
+
+SMS OTP: Quen thuộc, nhưng doanh nghiệp tốn chi phí gửi tin nhắn viễn thông cho từng lượt đăng nhập.
+
+TOTP: Miễn phí 100%, thao tác mở ứng dụng lấy mã nhanh chóng.
+4. Rủi ro khi mất điện thoại:
+
+SMS OTP: Kẻ xấu có thể tháo SIM lắp sang máy khác để nhận mã nếu SIM không đặt mã PIN.
+
+TOTP: Cần sử dụng Mã Khôi phục (Backup Codes) hoặc tính năng sao lưu mã hóa đám mây (Cloud Sync) để lấy lại quyền truy cập.
